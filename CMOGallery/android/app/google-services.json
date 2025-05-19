@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "252059010893",
+    "project_id": "speech-to-text-227510",
+    "storage_bucket": "speech-to-text-227510.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252059010893:android:f5c26535f4058fee4b1904",
+        "android_client_info": {
+          "package_name": "com.cmogallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252059010893-meho2nam40b57dmrtaeiaf5ndm6gof4t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cmogallery",
+            "certificate_hash": "1937cbfe4ce85f1cbbbc54fd900138f28f18518c"
+          }
+        },
+        {
+          "client_id": "252059010893-4n07868a57qpdjl2hd5up8r074hvhpn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsfFf20hNJknYJU4OYHDOP9ZWgRlQd-AA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252059010893-4n07868a57qpdjl2hd5up8r074hvhpn0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "252059010893-lg88b864jd6n0j2r8b8nn7qlnvohpk72.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gmogallery.cmogallery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
