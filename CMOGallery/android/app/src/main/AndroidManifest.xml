@@ -27,6 +27,14 @@ xmlns:tools="http://schemas.android.com/tools">
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+         <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="otpless"
+                    android:scheme="otpless.936n5z8bp088ivs1951d" />
+            </intent-filter>
       </activity>
     </application>
 </manifest>

@@ -95,7 +95,7 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-     {/* <ImageBackground source={{}}> */}
+    
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -109,7 +109,7 @@ const LoginScreen = () => {
             <View style={commonStyle.contentBox}>
               <View style={commonStyle.section}>
                 <Text style={styles.title}>AI Based CMO Gallery</Text>
-                {/* <Text style={styles.subTitle}>On Click Download</Text> */}
+             
               </View>
 
               <GoogleSignIn callback={() => setLoading(true)} />
@@ -173,20 +173,22 @@ const LoginScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              {/* <View style={commonStyle.section}>
-                <TouchableOpacity
-                  style={{ marginBottom: 10 }}
-                  onPress={() => navigation.navigate('ForgotPasswordScreen')}
-                >
-                  <Text style={commonStyle.linkText}>Forgot Password</Text>
-                </TouchableOpacity>
+              <View style={commonStyle.section}>
+               <TouchableOpacity
+  style={{ marginBottom: 10 }}
+  onPress={() => navigation.navigate('ForgotPasswordScreen')}
+>
+  <Text style={[commonStyle.linkText, { fontWeight: 'bold' }]}>Forgot Password</Text>
+</TouchableOpacity>
+
                 <View style={styles.registerPrompt}>
                   <Text style={commonStyle.questionText}>Not Register Yet? </Text>
                   <TouchableOpacity onPress={() => navigation.navigate('MobileRegisterScreen')}>
-                    <Text style={commonStyle.linkText}>Register Now</Text>
-                  </TouchableOpacity>
+  <Text style={[commonStyle.linkText, { fontWeight: 'bold' }]}>Register Now</Text>
+</TouchableOpacity>
+
                 </View>
-              </View> */}
+              </View>
 
               <Footer />
             </View>
