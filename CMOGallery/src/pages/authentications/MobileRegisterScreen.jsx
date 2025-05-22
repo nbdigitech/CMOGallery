@@ -30,7 +30,7 @@ const MobileRegisterScreen = () => {
     const [email, setEmail] = useState('');
     const [districts, setDistricts] = useState([]);
     const [password, setPassword] = useState('');
-    const [formData, setFormData] = useState(null);
+    const formDataRef = useRef(null);
     const [district, setDistrict] = useState('');
     const [showDistrictModal, setShowDistrictModal] = useState(false);
     const inputRefs = [
@@ -76,16 +76,17 @@ const MobileRegisterScreen = () => {
                 return;
             }
 
-            if (res.status === 200) {
-                setFormData({
-                    name,
-                    email,
-                    district,
-                    password,
-                    mobile: mobile.trim(),
-                });
-                headlessModule.start({ phone: mobile.trim(), countryCode: "91" });
-            }
+           if (res.status === 200) {
+    formDataRef.current = {
+        name,
+        email,
+        district,
+        password,
+        mobile: mobile.trim(),
+    };
+    headlessModule.start({ phone: mobile.trim(), countryCode: "91" });
+}
+
 
         } catch (err) {
             Alert.alert('Network error while checking user.');
@@ -118,39 +119,41 @@ const MobileRegisterScreen = () => {
         }
 
         if (responseType === "ONETAP" && result.statusCode === 200) {
-            console.log("✅ OTP Link clicked. Proceeding with signup...");
+    console.log("✅ OTP Link clicked. Proceeding with signup...");
 
-            const dataToSend = result.context || formData;
+    const dataToSend = formDataRef.current || result.context;
 
-            if (!dataToSend || !dataToSend.mobile) {
-                Alert.alert("Error", "Form data missing.");
-                return;
-            }
+if (!dataToSend || !dataToSend.mobile) {
+    Alert.alert("Error", "Form data missing. Please re-enter.");
+    setShowOtp(false);
+    return;
+}
 
 
-            try {
-                const res = await fetch(`${baseUrl}complete-signup`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Otpless-Mobile': formData.mobile
-                    },
-                    body: JSON.stringify(formData)
-                });
+    try {
+        const res = await fetch(`${baseUrl}complete-signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Otpless-Mobile': dataToSend.mobile
+            },
+            body: JSON.stringify(dataToSend)
+        });
 
-                const data = await res.json();
+        const data = await res.json();
 
-                if (res.status === 200) {
-                    Alert.alert("Success", "Account created successfully!");
-                    setTimeout(() => navigation.navigate("LoginScreen"), 500);
-                } else {
-                    Alert.alert("Error", data?.error || "Signup failed.");
-                }
-            } catch (err) {
-                console.error("❌ Signup error:", err);
-                Alert.alert("Error", "Network error during signup.");
-            }
+        if (res.status === 200) {
+            Alert.alert("Success", "Account created successfully!");
+            setTimeout(() => navigation.navigate("LoginScreen"), 500);
+        } else {
+            Alert.alert("Error", data?.error || "Signup failed.");
         }
+    } catch (err) {
+        console.error("❌ Signup error:", err);
+        Alert.alert("Error", "Network error during signup.");
+    }
+}
+
         if (responseType === "VERIFY" && result.statusCode !== 200) {
             console.log("❌ VERIFY failed", result.response?.errorMessage);
             Alert.alert("OTP Verification Failed", result.response?.errorMessage || "Invalid OTP or expired link.");

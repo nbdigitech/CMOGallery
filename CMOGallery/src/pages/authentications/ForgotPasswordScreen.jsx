@@ -98,31 +98,41 @@ const ForgotPasswordScreen = () => {
         }
     };
     const checkUserExists = async () => {
-        try {
-            const res = await fetch(`${baseUrl}check-user-exists`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    mobile: mobile.trim(),
-                    email: "dummy@check.com", // dummy email to satisfy backend check
-                }),
-            });
+    try {
+        const res = await fetch(`${baseUrl}check-user-exists`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                mobile: mobile.trim(),
+                email: "dummy@check.com", // dummy email to satisfy backend check
+            }),
+        });
 
+        if (res.status === 409) {
+            // ✅ Mobile number exists — this is expected
+            return true;
+        }
+
+        // ❌ Not registered
+        if (res.status === 200) {
             const result = await res.json();
-
-            if (res.status === 409 && result.error?.includes("Mobile number already registered")) {
-                return true; // ✅ Exists
+            if (result?.message?.includes("available")) {
+                Alert.alert("Error", "This mobile number is not registered.");
             }
-
-            Alert.alert("Error", "This mobile number is not registered.");
-            return false;
-        } catch (err) {
-            console.error("❌ Server error:", err);
-            Alert.alert("Error", "Something went wrong while checking user.");
             return false;
         }
-    };
 
+        // ❌ Handle unexpected errors
+        const errData = await res.json();
+        Alert.alert("Error", errData?.error || "Unexpected error");
+        return false;
+
+    } catch (err) {
+        console.error("❌ Server error:", err);
+        Alert.alert("Error", "Something went wrong while checking user.");
+        return false;
+    }
+};
 
     return (
         <SafeAreaView style={styles.container}>
